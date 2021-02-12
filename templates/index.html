@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+          integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ="
+          crossorigin="anonymous"
+        />
+        
+        <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}" />
+
+        <title>Covid-19</title>
+
+        <style>
+            .container {
+                background-image: url("{{ url_for('static',filename='pandemic-background.png') }}");
+                width: 100%;
+                
+            }
+            .footer {
+            height: 20px;
+            margin-top: -20px;
+            }
+            footer {
+            background: #e6abf4;
+            color: white;
+            line-height: 15px;
+            padding:0 20px;
+            font: 15px Sans-Serif
+            }  
+        </style>
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWJBSMQWQ7"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZWJBSMQWQ7');
+        </script>
+    </head>
+
+<body>
+    <nav id="navbar">
+        <ul>
+          <li style="font-size: 150%;"><a href="http://www.rogerlau.ml/">Home</a></li>
+          
+          <!--return false will prevent browser from following the link-->
+          <li style="font-size: 150%;"><a id="myLink" title="Click for a map" href="#" onclick="showMap();return false;">Map</a></li>
+          <li style="font-size: 150%;"><a title="Click for all locations" href="#" onclick="showMapAll();return false;">All Locations</a></li>
+          <li style="font-size: 150%;"><a href="http://www.rogerlau.ml/comment">Give Me Comment</a></li>
+          <li style="font-size: 150%;"><a href="#" onclick="showContact();return false;">Contact Me</a></li>
+          <li style="font-size: 100%;">© 2021 Roger Lau All rights reserved</li>
+        </ul>
+    </nav>
+    
+    <header>
+        <button id="toggle" class="toggle">
+            <i class="fa fa-bars fa-2x"></i>
+          </button>
+  
+        <h1>Covid-19 in Hong Kong</h1><br>  
+        <div style="padding-left: 33%; padding-right: 33%;">    
+            <input type="text" id="locname" placeholder="e.g.海港城" style="font-size: 25px; width: 120%; padding: 20px 0px;">
+            <button style="font-size: 25px;" onclick="getResult()">Search</button>
+            <button style="font-size: 25px;" onclick="showMap()">Map</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <p id="reminder" style="font-size: 25px; text-align: center; ">Residential buildings in which probable/confirmed cases have resided in the past 14 days <br>or non-residential building with 2 or more probable/confirmed cases in the past 14 days<br>
+            過去14天內曾有疑似/確診個案居住過的住宅大廈; <br>或過去 14 天內曾出現兩宗或以上疑似/確診個案的非住宅大廈 <br><br><br>Enter to find the locations of confirmed cases within 1 km<br>輸入尋找1公里範圍內的確診個案地點</p>
+        <div class="text" id="result" style="font-size: 30px; text-align: center; min-height: 500px;"></div>
+
+    </div>
+    <footer class="footer">
+        © 2021 Roger Lau All rights reserved
+    </footer>
+
+
+    
+    <script>
+    const toggle = document.getElementById('toggle');
+    const postsContainer = document.getElementById('posts-container');
+
+    function closeNavbar(e) {
+        if (
+            document.body.classList.contains('show-nav') &&
+            e.target !== toggle &&
+            !toggle.contains(e.target) &&
+            e.target !== navbar &&
+            !navbar.contains(e.target)
+        ) {
+            document.body.classList.toggle('show-nav');
+            document.body.removeEventListener('click', closeNavbar);
+        } else if (!document.body.classList.contains('show-nav')) {
+            document.body.removeEventListener('click', closeNavbar);
+        }
+        }
+
+        // Toggle nav
+        toggle.addEventListener('click', () => {
+        document.body.classList.toggle('show-nav');
+        document.body.addEventListener('click', closeNavbar);
+    });
+
+    async function getResult() {
+        var locationName = document.getElementById('locname').value;
+        localStorage.setItem("locationName", locationName);
+        const res = await fetch(
+            'http://www.rogerlau.ml/search/'+locationName,{
+                headers: {
+                    "Authorization": `Basic ${btoa(`noentry:noentry`)}`
+                },
+                }
+        );
+
+        const data = await res.json();
+        console.log(data);
+        var response = ""
+        data["locations"].forEach(element => {
+            response += `<p>${element[0]}   (${element[3]} 米)</p>`
+        });
+        //data["locations"]
+        document.getElementById("result").innerHTML =response;
+         
+        //localStorage.setItem("nearby", JSON.stringify(data["locations"]["nearby"]));
+        //localStorage.setItem("origin", JSON.stringify(data["locations"]["origin"]));
+        //JSON.stringify() convert as json
+        document.getElementById('reminder').innerHTML ="";
+        
+        return data;
+    }
+
+    function showMap() { 
+        if (typeof(Storage) !== "undefined") {
+            var location = localStorage.getItem("locationName");
+            console.log(location);
+            
+            //document.getElementById("result").innerHTML = location; //it works
+            window.open( 
+            "http://www.rogerlau.ml/map/"+location, "_blank");
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+        }
+    }
+    function showMapAll() { 
+            window.open("http://www.rogerlau.ml/map/all", "_blank");
+    }
+
+    function showContact() {
+        document.getElementById('reminder').innerHTML ="";
+        document.getElementById("result").innerHTML = '<p>Roger Lau</p><p style="font-size: 15px;">rogerfromhongkong@gmail.com</p>';
+    }
+    
+    </script>
+</body>
+
+</html>

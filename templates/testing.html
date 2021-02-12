@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <title>Alert</title>
+</head>
+
+<body>
+    
+    <h2>Alert</h2>
+    <div id="result"></div>
+    <!--<p>Check out <a href="https://www.freecodecamp.org/" target="_blank">freeCodeCamp_new</a>.</p>-->
+    <button onclick="showAlert()">Open New Tab</button>
+    
+    <form action="http://localhost:4000/geo" method="get">
+                
+        <input type="text" id="locname" name="locname" placeholder="例如:海港城" onclick="showAlert()">
+        <input type="submit" value="Search">
+    </form>
+    
+    <script>
+    const loc = document.getElementById('locname');
+
+    function showAlert(){
+    localStorage.setItem("locname", loc.value);
+    //alert('Form has been submitted');
+    
+    }
+
+    </script>   
+</body>
+</html>
