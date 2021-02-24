@@ -6,7 +6,7 @@ It is a website that provides the most updated information about Covid-19 develo
 
 ### # packages: folium, HKAddressParser, Flask, pandas
 
-This project involves backend development, frontend development, API, hosting service, data extraction, data transformation (physical address to latitude & longitudes), data loading, algorithm of convert coordinate system into grid system for quick search, data visualisation.
+This project involves backend development, frontend development, API, hosting service, data extraction, data transformation (physical address to latitudes & longitudes), data loading, algorithm of converting coordinate system into grid system for quick search, data visualisation.
 
 ## The steps are as explained below:
 
