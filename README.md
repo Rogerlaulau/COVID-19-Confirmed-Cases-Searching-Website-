@@ -1,6 +1,15 @@
 # COVID-19 Confirmed Cases Searching Website 
 A website provides automatic, updated locations of confirmed cases in the past 14 days on a daily basis. Please have a look at https://rogerlau.net.
 
+Text result corresponding to the searching location
+![alt text](searching_result.png "Title Text")
+
+Map result corresponding to the searching location
+![alt text](result_map.png "Title Text")
+
+Map result for all confirmed cases
+![alt text](result_all_cases.png "Title Text")
+
 ## Covid-19 Data Visualisation, Data Transformation, GeoData Visualization, Full Stack Development
 
 It is a website that provides the most updated information about Covid-19 development in Hong Kong on a daily basis. Visitors could input any locations of their choices in the search bar and obtain the locations of confirmed cases within 1 km. By clicking the button Map, text results could be visualised on a map immediately, with the input location as the center. Go to Navigation Bar and click "All Locations" to view all confirmed cases in the past 14 days.
@@ -31,4 +40,4 @@ Note: in order not to ask visitor to enter the same location again, localStorage
 
 - Note that, package folium is user-friendly to create map with lats and longs.
 - HKAddressParser is brilliant to identify an accurate location and return latitudes and longitudes. An API from HK government is called to get the coordinates.
-- Nginx, a reverse proxy is set and bind to my domain from freenom.
+- Nginx, a reverse proxy is set and bind to my domain.
