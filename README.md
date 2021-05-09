@@ -4,10 +4,10 @@ A website provides automatic, updated locations of confirmed cases in the past 1
 Text result corresponding to the searching location
 ![alt text](searching_result.png "Title Text")
 
-Map result corresponding to the searching location
-![alt text](result_map.png "Title Text")
+Map result corresponding to the searching location  
+![alt text](result_map.png "Title Text"). 
 
-Map result for all confirmed cases
+Map result for all confirmed cases. 
 ![alt text](result_all_cases.png "Title Text")
 
 ## Covid-19 Data Visualisation, Data Transformation, GeoData Visualization, Full Stack Development
